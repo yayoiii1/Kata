@@ -9,6 +9,6 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 使用前に、**必ず**環境をセットアップするために**setup.exe**を実行してください。
 
 效果示例
-处理前 ![处理前](/images/example.png)
+处理前 ![处理前](/example.png)
 
-处理后![处理后](/images/example.jpgg)
+处理后![处理后](/example.jpg)
