@@ -24,6 +24,10 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 
 ![处理后](/example.jpg)
 
-如果这个项目能帮到您,请在能力范围内支持该项目,感谢您的支持！
-If this project has been beneficial to you, kindly consider offering support within your means. We appreciate your backing!
+如果这个项目能帮到您,请在能力范围内支持该项目,感谢您的支持！<br>
+<br>
+
+If this project has been beneficial to you, kindly consider offering support within your means. We appreciate your backing!<br>
+<br>
+
 paypal.me/Kata787
