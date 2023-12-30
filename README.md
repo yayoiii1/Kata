@@ -13,13 +13,13 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 **效果示例：**
 
 <div align="center">
-  <p>**处理前**</p>
+  <p>处理前</p>
 </div>
 
 ![处理前](/example.png)
 
 <div align="center">
-  <p>**处理后**</p>
+  <p>处理后</p>
 </div>
 
 ![处理后](/example.jpg)
