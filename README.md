@@ -7,8 +7,19 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 
 これは日本語のEPUBファイル内の漢字に注音をつけるプロジェクトです。
 使用前に、**必ず**環境をセットアップするために**setup.exe**を実行してください。
+<br>
+<br>
 
-效果示例
-处理前 ![处理前](/example.png)
+**效果示例：**
 
-处理后![处理后](/example.jpg)
+<div align="center">
+  <p>**处理前**</p>
+</div>
+
+![处理前](/example.png)
+
+<div align="center">
+  <p>**处理后**</p>
+</div>
+
+![处理后](/example.jpg)
