@@ -23,6 +23,10 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 </div>
 
 ![处理后](/example.jpg)
+<br>
+<br>
+<br>
+<br>
 
 如果这个项目能帮到您,请在能力范围内支持该项目,感谢您的支持！<br>
 <br>
