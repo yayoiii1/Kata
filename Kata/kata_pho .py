@@ -4,37 +4,67 @@ from pykakasi import kakasi
 from bs4 import BeautifulSoup
 import os
 import shutil
-from ebooklib import epub
+import zipfile
 
 output_folder = "C:\\Kata\\kernel\\temp"
 output_html_path = 'C:\\Kata\\kernel\\html'
 
-def extract_and_save_html_from_epub(epub_path, output_folder):
-    book = epub.read_epub(epub_path)
-
+def extract_and_save_html_from_epub(epub_file_path, output_folder):
+    # 确保输出文件夹存在
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    for index, item in enumerate(book.items):
-        if item.get_type() == 9:
-            content = item.get_content()
-            filename = os.path.basename(item.get_name())
-            output_path = os.path.join(output_folder, filename)
-            with open(output_path, 'wb') as file:
-                file.write(content)
-            print(f"Saved {filename} to {output_folder}")
+    # 解压 EPUB 文件
+    with zipfile.ZipFile(epub_file_path, 'r') as epub_zip:
+        # 获取所有文件列表
+        file_list = epub_zip.namelist()
 
-def replace_files_in_epub(epub_path, folder_a_path, output_epub_path):
-    book = epub.read_epub(epub_path)
-    for item in book.items:
-        if item.get_type() == 9:
-            file_name = os.path.basename(item.file_name)
-            file_a_path = os.path.join(folder_a_path, file_name)
-            if os.path.exists(file_a_path):
-                with open(file_a_path, 'rb') as file_a:
-                    file_a_content = file_a.read()
-                    item.content = file_a_content
-    epub.write_epub(output_epub_path, book)
+        # 提取 HTML 和 XHTML 文件
+        for file_name in file_list:
+            if file_name.lower().endswith(('.html', '.xhtml')):
+                # 读取文件内容
+                content = epub_zip.read(file_name).decode('utf-8')
+
+                # 使用 BeautifulSoup 移除可能存在的不必要标签
+                soup = BeautifulSoup(content, 'html.parser')
+                clean_content = soup.prettify()
+
+                # 构建输出文件路径
+                output_file_path = os.path.join(output_folder, os.path.basename(file_name))
+
+                # 写入内容到文件
+                with open(output_file_path, 'w', encoding='utf-8') as output_file:
+                    output_file.write(clean_content)
+
+                print(f"Extracted: {output_file_path}")
+
+def replace_files_in_epub(epub_path, source_folder, output_epub_path):
+    # Create a temporary directory
+    temp_dir = "temp_epub"
+    os.makedirs(temp_dir, exist_ok=True)
+
+    try:
+        # Extract the original EPUB file to the temporary directory
+        with zipfile.ZipFile(epub_path, 'r') as zip_ref:
+            zip_ref.extractall(temp_dir)
+
+        # Delete the 'text' directory in the temporary directory
+        text_dir = os.path.join(temp_dir, 'text')
+        if os.path.exists(text_dir):
+            shutil.rmtree(text_dir)
+
+        # Copy the entire source_folder to the temporary directory with the name 'text'
+        shutil.copytree(source_folder, text_dir)
+
+        # Create a new EPUB file
+        with zipfile.ZipFile(output_epub_path, 'w') as zip_ref:
+            for root, dirs, files in os.walk(temp_dir):
+                for file in files:
+                    zip_ref.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), temp_dir))
+
+    finally:
+        # Delete the temporary directory
+        shutil.rmtree(temp_dir)
 
 def empty_folder(folder_path):
     shutil.rmtree(folder_path)
@@ -66,12 +96,12 @@ def process_japanese_text(text):
 def create_new_html(file_path, output_html_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         html_content = file.read()
-    soup = BeautifulSoup(html_content, 'html.parser')
+    soup = BeautifulSoup(html_content, 'html5lib')
     paragraphs = soup.body.find_all('p')
     for paragraph in paragraphs:
         processed_text = process_japanese_text(paragraph.get_text(strip=True))
         paragraph.string = ''
-        paragraph.append(BeautifulSoup(processed_text, 'html.parser'))
+        paragraph.append(BeautifulSoup(processed_text, 'html5lib'))
     filename = os.path.basename(file_path)
     output_new_html_path = os.path.join(output_html_path, filename)
     with open(output_new_html_path, 'wb') as new_file:
@@ -110,4 +140,3 @@ file_path = input("INPUT FILE PATH: ")
 process_file(file_path)
 print("Completed! Press any botton.")
 input()
-# 没写注释的原因是注释还没写好 (/ω＼)
