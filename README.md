@@ -35,4 +35,4 @@ If this project has been beneficial to you, kindly consider offering support wit
 <br>
 
 
-![pay](/pay.png)
+<img src="/pay.jpg" alt="pay" style="width: 230px; height: 300px;">
