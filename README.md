@@ -34,4 +34,5 @@ This is a project for adding phonetic annotations to Kanji in Japanese EPUB file
 If this project has been beneficial to you, kindly consider offering support within your means. We appreciate your backing!<br>
 <br>
 
-paypal.me/Kata787
+
+![pay](/pay.png)
