@@ -1,4 +1,4 @@
-# Kata
+# Kata Ver 1.0 TESTING
 这是一个用于为日语epub文件中的汉字注音的项目。
 使用前**务必**运行**setup.exe**准备环境
 
